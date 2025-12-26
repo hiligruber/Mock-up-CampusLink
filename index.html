@@ -190,31 +190,30 @@
         .btn-mini { color: var(--primary-green); text-decoration: none; }
 
         /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; padding: 40px 5%; }
-            .hero-content h1 { font-size: 42px; letter-spacing: -1px; }
-            .hero-image-grid { width: 100%; gap: 10px; margin-top: 20px; }
-            .photo-wrapper { height: 130px; }
-            .nav-items { display: none; }
-        }
-        /* התאמה לנייד */
-@media (max-width: 768px) {
-    /* הסרגל הופך לטור או מרווח יותר */
+       @media (max-width: 768px) {
+    .hero { flex-direction: column; text-align: center; padding: 40px 5%; }
+    .hero-content h1 { font-size: 42px; letter-spacing: -1px; }
+    .hero-image-grid { width: 100%; gap: 10px; margin-top: 20px; }
+    .photo-wrapper { height: 130px; }
+
+    /* התיקון לסרגל הניווט */
     nav {
         padding: 15px 5%;
-        flex-direction: column; /* הלוגו מעל התפריט */
-        gap: 10px;
+        flex-direction: column; /* לוגו מעל התפריט */
+        gap: 15px;
     }
 
-    .nav-items {
-        gap: 10px;
-        flex-wrap: wrap; /* שהקישורים ירדו שורה אם אין מקום */
+    .nav-items { 
+        display: flex; /* במקום none - עכשיו יראו את זה! */
+        gap: 15px;
+        flex-wrap: wrap; 
         justify-content: center;
     }
 
     .nav-items a {
-        margin-left: 10px;
-        font-size: 13px; /* הקטנת פונט לנייד */
+        margin: 0 5px;
+        font-size: 14px; 
+        font-weight: 700;
     }
 
     .profile-btn {
@@ -222,15 +221,14 @@
         padding: 8px 15px;
     }
 
-    /* שינוי הגריד לטור אחד במקום שניים */
-    .jobs-container, .layout, .container {
-        grid-template-columns: 1fr; /* הכל נהיה טור אחד ארוך */
+    /* שינוי הגריד לטור אחד */
+    .jobs-container, .layout, .container, .profile-container {
+        grid-template-columns: 1fr !important; 
         padding: 20px 5%;
     }
 
-    /* הפיכת התפריט הצדדי (העלאה) לראשון ברשימה */
-    aside, .card:first-child {
-        position: static; /* שלא ייתקע למעלה ויסתיר */
+    aside, .card:first-child, .post-job-card {
+        position: static; 
         width: 100%;
         box-sizing: border-box;
     }
@@ -245,9 +243,9 @@
         </div>
         <div class="nav-items">
             <a href="rides.html">Rides</a>
-            <a href="rides.html">Materials</a>
-             <a href="jobs.html">Jobs</a>
-            <a href="#" style="background: var(--primary-green); color: white; padding: 10px 20px; border-radius: 50px;">Profile</a>
+            <a href="materials.html">Materials</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="profile.html" style="background: var(--primary-green); color: white; padding: 10px 20px; border-radius: 50px;">Profile</a>
         </div>
     </nav>
 

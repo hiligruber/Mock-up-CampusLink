@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusLink | My Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #1b5e20; /* הצבע הכהה האחיד בכל האתר */
+            --text-main: #1d1d1f;
+            --bg-gray: #f8f9fa;
+            --danger-red: #ff5252;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            margin: 0;
+            background-color: var(--bg-gray);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: #ffffff;
+            padding: 15px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 36px; font-weight: 800; text-decoration: none; color: #000; letter-spacing: -0.5px; }
+        .logo span { color: var(--primary-green); }
+        .nav-items a { text-decoration: none; color: var(--text-main); margin-left: 20px; font-weight: 700; font-size: 15px; }
+
+        /* Profile Layout */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* יחס זהה ל-Rides ו-Jobs */
+            gap: 40px;
+            padding: 40px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Section Titles - זהה לכל האתר */
+        .section-title {
+            font-weight: 800;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: var(--dark-green);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .title-with-line::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+        /* Profile Card - צד שמאל */
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            height: fit-content;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .profile-pic-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f0f0f0;
+        }
+
+        .edit-pic-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Form Elements - זהה ל-Post a Job/Ride */
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 14px; color: #555; }
+        .form-group input {
+            width: 100%; padding: 14px; border: 2px solid #f0f0f0; border-radius: 12px;
+            font-family: 'Assistant', sans-serif; font-size: 15px; box-sizing: border-box; background: #f9f9f9;
+        }
+        .form-group input:focus { border-color: var(--primary-green); background: white; outline: none; }
+
+        .save-btn {
+            width: 100%; background: var(--primary-green); color: white; border: none; padding: 16px;
+            border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s;
+        }
+        .save-btn:hover { background: var(--dark-green); transform: translateY(-2px); }
+
+        /* Activity List - צד ימין */
+        .activity-list { display: flex; flex-direction: column; gap: 15px; }
+
+        .activity-card {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #f0f0f0;
+            transition: 0.3s ease;
+        }
+        .activity-card:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.06); }
+
+        .activity-info { display: flex; align-items: center; gap: 20px; }
+        .activity-icon {
+            width: 50px; height: 50px; background: #f9f9f9; 
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
+            color: var(--primary-green); font-size: 20px; border: 1px solid #eee;
+        }
+
+        .activity-details h4 { margin: 0; font-size: 18px; font-weight: 800; color: #1a1a1a; }
+        .activity-details p { margin: 4px 0 0; color: #777; font-size: 14px; }
+
+        .activity-actions { display: flex; align-items: center; gap: 15px; }
+
+        .status-badge {
+            font-size: 11px; font-weight: 800; padding: 6px 14px;
+            border-radius: 50px; background: #e8f5e9; color: #2e7d32;
+            text-transform: uppercase;
+        }
+
+        .delete-btn {
+            background: none; border: none; color: var(--danger-red);
+            cursor: pointer; font-size: 18px; transition: 0.2s;
+        }
+        .delete-btn:hover { transform: scale(1.1); }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .profile-container { grid-template-columns: 1fr; padding: 20px 5%; }
+            nav { flex-direction: column; gap: 10px; }
+            .nav-items { justify-content: center; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Campus<span>Link</span></a>
+        <div class="nav-items">
+            <a href="rides.html">Rides</a>
+            <a href="materials.html">Materials</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="profile.html" style="background: #1d1d1f; color: white; padding: 10px 22px; border-radius: 50px;">Profile</a>
+        </div>
+    </nav>
+
+    <main class="profile-container">
+        
+        <section>
+            <h2 class="section-title">My Profile</h2>
+            <div class="profile-card">
+                <div class="profile-pic-container">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80" alt="Profile" class="profile-pic">
+                    <button class="edit-pic-btn"><i class="fa-solid fa-camera"></i></button>
+                </div>
+                
+                <form>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" value="Maya Levi">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" value="maya.l@student.mta.ac.il">
+                    </div>
+                    <div class="form-group">
+                        <label>Institution</label>
+                        <input type="text" value="Academic College of Tel Aviv-Yaffo">
+                    </div>
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </form>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title title-with-line">My Activity</h2>
+            <div class="activity-list">
+                
+                <div class="activity-card">
+                    <div class="activity-info">
+                        <div class="activity-icon"><i class="fa-solid fa-car"></i></div>
+                        <div class="activity-details">
+                            <h4>Ride to MTA</h4>
+                            <p>Sunday, 08:30 • 2 Seats Left</p>
+                        </div>
+                    </div>
+                    <div class="activity-actions">
+                        <span class="status-badge">Active</span>
+                        <button class="delete-btn"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-info">
+                        <div class="activity-icon"><i class="fa-solid fa-briefcase"></i></div>
+                        <div class="activity-details">
+                            <h4>Junior QA Engineer</h4>
+                            <p>Applied to TechCorp • Oct 24</p>
+                        </div>
+                    </div>
+                    <div class="activity-actions">
+                        <span class="status-badge" style="background:#e3f2fd; color:#1976d2;">Pending</span>
+                        <button class="delete-btn"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

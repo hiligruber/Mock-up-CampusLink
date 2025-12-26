@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusLink | Rides</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #1b5e20;
+            --text-main: #1d1d1f;
+            --bg-gray: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            margin: 0;
+            background-color: var(--bg-gray);
+            color: var(--text-main);
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 15px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 36px; font-weight: 800; text-decoration: none; color: #000; letter-spacing: -0.5px; }
+        .logo span { color: var(--primary-green); }
+        .nav-items a { text-decoration: none; color: var(--text-main); margin-left: 20px; font-weight: 700; font-size: 15px; }
+
+        .rides-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            padding: 40px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Form Styling */
+        .add-ride-card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .add-ride-card h2 { font-weight: 800; margin-top: 0; color: var(--dark-green); }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 14px; color: #555; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 14px; border: 2px solid #f0f0f0; border-radius: 12px;
+            font-family: 'Assistant', sans-serif; font-size: 15px; box-sizing: border-box; background: #f9f9f9;
+        }
+        .form-group input:focus { border-color: var(--primary-green); background: white; outline: none; }
+
+        .submit-btn {
+            width: 100%; background: var(--primary-green); color: white; border: none; padding: 16px;
+            border-radius: 12px; font-family: 'Assistant', sans-serif; font-weight: 800; cursor: pointer; transition: 0.3s;
+        }
+        .submit-btn:hover { background: var(--dark-green); transform: translateY(-2px); }
+
+        /* Available Rides Styling */
+        .available-rides h2 { font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .available-rides h2::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+        .ride-list { display: flex; flex-direction: column; gap: 15px; }
+
+        .ride-card {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        .ride-card:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.06); border-color: var(--primary-green); }
+
+        .ride-info { display: flex; gap: 20px; align-items: center; }
+        .driver-avatar { width: 55px; height: 55px; border-radius: 18px; background: #eee; overflow: hidden; }
+        .driver-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .route-details h4 { margin: 0; font-size: 19px; font-weight: 800; color: #1a1a1a; }
+        .route-details p { margin: 4px 0 0; color: #777; font-size: 14px; }
+        
+        .ride-meta { text-align: right; }
+        .seats-left { color: var(--primary-green); font-weight: 800; font-size: 12px; margin-bottom: 8px; text-transform: uppercase; }
+
+        .join-btn {
+            background: #f0f2f5; color: var(--text-main); border: none; padding: 10px 22px;
+            border-radius: 50px; font-family: 'Assistant', sans-serif; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .join-btn:hover { background: var(--primary-green); color: white; }
+
+        @media (max-width: 900px) {
+            .rides-container { grid-template-columns: 1fr; }
+            .add-ride-card { position: static; }
+        }
+        /* התאמה לנייד */
+@media (max-width: 768px) {
+    /* הסרגל הופך לטור או מרווח יותר */
+    nav {
+        padding: 15px 5%;
+        flex-direction: column; /* הלוגו מעל התפריט */
+        gap: 10px;
+    }
+
+    .nav-items {
+        gap: 10px;
+        flex-wrap: wrap; /* שהקישורים ירדו שורה אם אין מקום */
+        justify-content: center;
+    }
+
+    .nav-items a {
+        margin-left: 10px;
+        font-size: 13px; /* הקטנת פונט לנייד */
+    }
+
+    .profile-btn {
+        margin-left: 5px;
+        padding: 8px 15px;
+    }
+
+    /* שינוי הגריד לטור אחד במקום שניים */
+    .jobs-container, .layout, .container {
+        grid-template-columns: 1fr; /* הכל נהיה טור אחד ארוך */
+        padding: 20px 5%;
+    }
+
+    /* הפיכת התפריט הצדדי (העלאה) לראשון ברשימה */
+    aside, .card:first-child {
+        position: static; /* שלא ייתקע למעלה ויסתיר */
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Campus<span>Link</span></a>
+        <div class="nav-items">
+            <a href="#" style="color: var(--primary-green);">Rides</a>
+            <a href="materials.html">Materials</a>
+             <a href="jobs.html">Jobs</a>
+            <a href="profile.html" style="background: #1d1d1f; color: white; padding: 10px 22px; border-radius: 50px;">Profile</a>
+        </div>
+    </nav>
+
+    <main class="rides-container">
+        
+        <section class="add-ride-card">
+            <h2>Post a Ride</h2>
+            <form>
+                <div class="form-group">
+                    <label>From Where?</label>
+                    <input type="text" placeholder="City or Area" required>
+                </div>
+                <div class="form-group">
+                    <label>To Campus</label>
+                    <select>
+                        <option>MTA (Academic College of Tel Aviv-Yaffo)</option>
+                        <option>IDC (Reichman University)</option>
+                        <option>HUJI (Hebrew University)</option>
+                        <option>Tel Aviv University</option>
+                        <option>Technion</option>
+                    </select>
+                </div>
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div><label>Date</label><input type="date" required></div>
+                    <div><label>Time</label><input type="time" required></div>
+                </div>
+                <div class="form-group">
+                    <label>Seats</label>
+                    <select><option>1 Seat</option><option>2 Seats</option><option>3 Seats</option></select>
+                </div>
+                <button type="submit" class="submit-btn">Publish Ride</button>
+            </form>
+        </section>
+
+        <section class="available-rides">
+            <h2>Available Rides</h2>
+            <div class="ride-list">
+                
+                <div class="ride-card">
+                    <div class="ride-info">
+                        <div class="driver-avatar"><img src="https://i.pravatar.cc/150?u=11" alt="Driver"></div>
+                        <div class="route-details">
+                            <h4>Holon → MTA</h4>
+                            <p><i class="fa-regular fa-clock"></i> Today, 08:15 AM • <strong>Amit S.</strong></p>
+                        </div>
+                    </div>
+                    <div class="ride-meta">
+                        <div class="seats-left">2 seats left</div>
+                        <button class="join-btn">Join Ride</button>
+                    </div>
+                </div>
+
+                <div class="ride-card">
+                    <div class="ride-info">
+                        <div class="driver-avatar"><img src="https://i.pravatar.cc/150?u=22" alt="Driver"></div>
+                        <div class="route-details">
+                            <h4>Tel Aviv (North) → IDC</h4>
+                            <p><i class="fa-regular fa-clock"></i> Today, 09:30 AM • <strong>Jordan K.</strong></p>
+                        </div>
+                    </div>
+                    <div class="ride-meta">
+                        <div class="seats-left">1 seat left</div>
+                        <button class="join-btn">Join Ride</button>
+                    </div>
+                </div>
+
+                <div class="ride-card">
+                    <div class="ride-info">
+                        <div class="driver-avatar"><img src="https://i.pravatar.cc/150?u=33" alt="Driver"></div>
+                        <div class="route-details">
+                            <h4>Modi'in → HUJI</h4>
+                            <p><i class="fa-regular fa-clock"></i> Today, 07:45 AM • <strong>Roni L.</strong></p>
+                        </div>
+                    </div>
+                    <div class="ride-meta">
+                        <div class="seats-left">3 seats left</div>
+                        <button class="join-btn">Join Ride</button>
+                    </div>
+                </div>
+
+                <div class="ride-card">
+                    <div class="ride-info">
+                        <div class="driver-avatar"><img src="https://i.pravatar.cc/150?u=44" alt="Driver"></div>
+                        <div class="route-details">
+                            <h4>Rishon LeZion → MTA</h4>
+                            <p><i class="fa-regular fa-clock"></i> Tomorrow, 08:00 AM • <strong>Danielle B.</strong></p>
+                        </div>
+                    </div>
+                    <div class="ride-meta">
+                        <div class="seats-left">2 seats left</div>
+                        <button class="join-btn">Join Ride</button>
+                    </div>
+                </div>
+
+                <div class="ride-card">
+                    <div class="ride-info">
+                        <div class="driver-avatar"><img src="https://i.pravatar.cc/150?u=55" alt="Driver"></div>
+                        <div class="route-details">
+                            <h4>Givatayim → TAU</h4>
+                            <p><i class="fa-regular fa-clock"></i> Tomorrow, 10:00 AM • <strong>Eyal M.</strong></p>
+                        </div>
+                    </div>
+                    <div class="ride-meta">
+                        <div class="seats-left">1 seat left</div>
+                        <button class="join-btn">Join Ride</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

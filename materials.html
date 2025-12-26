@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusLink | Materials Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #1b5e20;
+            --text-main: #1d1d1f;
+            --bg-gray: #f8f9fa; /* הצבע האפור של דף ה-Rides */
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            margin: 0;
+            background-color: var(--bg-gray);
+            color: var(--text-main);
+        }
+
+        /* Nav - אחיד לכל האתר */
+        nav {
+            background: #ffffff;
+            padding: 15px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 36px; font-weight: 800; text-decoration: none; color: #000; letter-spacing: -0.5px; }
+        .logo span { color: var(--primary-green); }
+        .nav-items a { text-decoration: none; color: var(--text-main); margin-left: 20px; font-weight: 700; font-size: 15px; }
+        
+        /* כפתור פרופיל שחור כמו ב-Rides */
+        .profile-btn {
+            background: #1d1d1f;
+            color: white !important;
+            padding: 10px 22px;
+            border-radius: 50px;
+        }
+
+        /* Layout Grid */
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 2.5fr; /* התאמה למבנה של ה-Rides */
+            gap: 40px;
+            padding: 40px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Card - מעוצב כמו ב-Rides */
+        .upload-card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .upload-card h2 { font-weight: 800; margin-top: 0; color: var(--dark-green); }
+
+        /* Drop Zone */
+        .drop-zone {
+            background: #f9f9f9;
+            border: 2px dashed #ddd;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .drop-zone:hover { border-color: var(--primary-green); background: white; }
+        .drop-zone i { font-size: 28px; color: var(--primary-green); margin-bottom: 10px; }
+
+        /* Inputs - כמו ב-Rides */
+        .form-input {
+            width: 100%; padding: 14px; margin-bottom: 15px;
+            border: 2px solid #f0f0f0; border-radius: 12px;
+            font-family: 'Assistant', sans-serif; font-size: 15px;
+            background: #f9f9f9; box-sizing: border-box;
+        }
+        .form-input:focus { border-color: var(--primary-green); background: white; outline: none; }
+
+        /* כפתור ירוק סולידי - כמו ב-Rides */
+        .submit-btn {
+            width: 100%; background: var(--primary-green); color: white; border: none; padding: 16px;
+            border-radius: 12px; font-family: 'Assistant', sans-serif; font-weight: 800; cursor: pointer; transition: 0.3s;
+        }
+        .submit-btn:hover { background: var(--dark-green); transform: translateY(-2px); }
+
+        /* Materials Grid & Header */
+        .section-title { font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: #eee; }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .material-box {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #f0f0f0;
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .material-box:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.06); border-color: var(--primary-green); }
+
+        .file-type-badge {
+            width: 45px; height: 45px; background: #f8f9fa;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: var(--primary-green); font-size: 20px; margin-bottom: 15px;
+        }
+
+        .material-box h4 { font-weight: 800; font-size: 18px; margin: 0 0 12px 0; color: #1a1a1a; line-height: 1.4; }
+
+        .tag { background: #f0f2f5; padding: 6px 14px; border-radius: 10px; font-size: 12px; font-weight: 700; color: #666; align-self: flex-start; }
+
+        .card-footer {
+            margin-top: 20px; padding-top: 15px; border-top: 1px solid #f8f8f8;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .download-info { font-size: 12px; font-weight: 700; color: #999; text-transform: uppercase; }
+
+        .circle-dl {
+            width: 35px; height: 35px; border-radius: 50%;
+            background: #f0f2f5; color: var(--text-main);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; transition: 0.3s;
+        }
+        .circle-dl:hover { background: var(--primary-green); color: white; }
+
+        /* התאמה לנייד */
+        @media (max-width: 950px) {
+            .layout { grid-template-columns: 1fr; }
+            .upload-card { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Campus<span>Link</span></a>
+        <div class="nav-items">
+            <a href="rides.html">Rides</a>
+            <a href="materials.html" style="color: var(--primary-green);">Materials</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="profile.html" class="profile-btn">Profile</a>
+        </div>
+    </nav>
+
+    <main class="layout">
+        
+        <aside class="upload-card">
+            <h2>Upload</h2>
+            <p style="font-size: 14px; color: #666; margin-bottom: 5px;">Help your community learn.</p>
+            
+            <div class="drop-zone">
+                <i class="fa-solid fa-file-circle-plus"></i>
+                <p style="font-size: 14px; font-weight: 700; color: var(--dark-green);">Drag PDF or Browse</p>
+            </div>
+
+            <form>
+                <input type="text" class="form-input" placeholder="Document Title">
+                <select class="form-input">
+                    <option disabled selected>Choose Course</option>
+                    <option>Computer Science</option>
+                    <option>Mathematics</option>
+                    <option>Psychology</option>
+                </select>
+                <button type="submit" class="submit-btn">Share to Library</button>
+            </form>
+        </aside>
+
+        <section>
+            <h2 class="section-title">Learning Resources</h2>
+            
+            <div class="materials-grid">
+                <div class="material-box">
+                    <div class="file-type-badge"><i class="fa-solid fa-file-pdf"></i></div>
+                    <h4>Algebra 1: Linear Systems Guide</h4>
+                    <span class="tag">Mathematics</span>
+                    <div class="card-footer">
+                        <span class="download-info">1.1k downloads</span>
+                        <a href="#" class="circle-dl"><i class="fa-solid fa-arrow-down"></i></a>
+                    </div>
+                </div>
+
+                <div class="material-box">
+                    <div class="file-type-badge"><i class="fa-solid fa-code"></i></div>
+                    <h4>Python for Beginners Summary</h4>
+                    <span class="tag">Computer Science</span>
+                    <div class="card-footer">
+                        <span class="download-info">850 downloads</span>
+                        <a href="#" class="circle-dl"><i class="fa-solid fa-arrow-down"></i></a>
+                    </div>
+                </div>
+
+                <div class="material-box">
+                    <div class="file-type-badge"><i class="fa-solid fa-brain"></i></div>
+                    <h4>Social Psych: Key Terms</h4>
+                    <span class="tag">Psychology</span>
+                    <div class="card-footer">
+                        <span class="download-info">230 downloads</span>
+                        <a href="#" class="circle-dl"><i class="fa-solid fa-arrow-down"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

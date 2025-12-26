@@ -147,11 +147,46 @@
         .circle-dl:hover { background: var(--primary-green); color: white; }
 
         /* התאמה לנייד */
+/* התאמה לנייד - גרסה מעודכנת למטריאלס */
         @media (max-width: 900px) {
-            .jobs-container { grid-template-columns: 1fr; padding: 20px 5%; }
-            .post-job-card { position: static; width: 100%; box-sizing: border-box; }
-            nav { flex-direction: column; gap: 10px; padding: 15px 5%; }
-            .nav-items { justify-content: center; gap: 10px; }
+            /* שינוי הגריד הראשי לטור אחד */
+            .layout { 
+                grid-template-columns: 1fr; 
+                padding: 20px 5%; 
+                gap: 30px;
+            }
+
+            /* ביטול ה-Sticky וסידור כרטיס ההעלאה */
+            .upload-card { 
+                position: static; 
+                width: 100%; 
+                box-sizing: border-box; 
+            }
+
+            /* סידור הסרגל: לוגו למעלה, תפריט מתחת */
+            nav { 
+                flex-direction: column; 
+                gap: 15px; 
+                padding: 15px 5%; 
+            }
+
+            /* הצגת התפריט ומרכזו */
+            .nav-items { 
+                display: flex;
+                justify-content: center; 
+                gap: 10px; 
+                flex-wrap: wrap;
+            }
+
+            .nav-items a {
+                margin: 0 5px;
+                font-size: 14px;
+            }
+
+            /* מוודא שכרטיסי המשאבים יפרסו על כל הרוחב בנייד */
+            .materials-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>

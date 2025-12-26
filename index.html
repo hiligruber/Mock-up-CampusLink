@@ -189,51 +189,62 @@
 
         .btn-mini { color: var(--primary-green); text-decoration: none; }
 
-        /* Mobile Adjustments */
      @media (max-width: 768px) {
-            /* הגדרות ה-Hero שכבר היו לך */
-            .hero { flex-direction: column; text-align: center; padding: 40px 5%; }
-            .hero-content h1 { font-size: 42px; letter-spacing: -1px; }
-            .hero-image-grid { width: 100%; gap: 10px; margin-top: 20px; }
-            .photo-wrapper { height: 130px; }
+    /* הגדרות ה-Hero והתמונות */
+    .hero { flex-direction: column; text-align: center; padding: 40px 5%; }
+    .hero-content h1 { font-size: 42px; letter-spacing: -1px; }
+    .hero-image-grid { width: 100%; gap: 10px; margin-top: 20px; }
+    .photo-wrapper { height: 130px; }
 
-            /* התיקון לסרגל הניווט בדף הבית */
-            nav {
-                padding: 15px 5%;
-                display: flex;
-                flex-wrap: wrap; /* מאפשר לניווט לרדת שורה */
-                justify-content: space-between; /* לוגו בצד אחד, פרופיל בצד שני */
-                align-items: center;
-            }
+    /* התיקון לסרגל הניווט */
+    nav {
+        padding: 15px 5%;
+        display: flex;
+        flex-direction: column; /* מסדר את השורות אחת מתחת לשנייה */
+        align-items: center;    /* ממרכז את הכל */
+        position: relative;     /* מאפשר לכפתור הפרופיל להתייחס ל-nav */
+    }
 
-            .logo {
-                order: 1; /* נשאר ראשון משמאל */
-            }
+    /* שורה ראשונה: לוגו באמצע ופרופיל בצד */
+    .logo {
+        font-size: 28px;
+        order: 1;
+        margin: 0 auto; /* מוודא שהלוגו נשאר במרכז */
+    }
 
-            /* כפתור הפרופיל הספציפי בדף הבית */
-            .profile-btn-nav, .profile-btn {
-                order: 2; /* עובר לצד ימין של הלוגו */
-                margin-left: auto;
-                padding: 8px 18px;
-                font-size: 14px;
-            }
+    /* כפתור הפרופיל נצמד לימין באותה שורה של הלוגו */
+    .profile-btn-nav, .profile-btn {
+        position: absolute;
+        right: 5%;      /* מרחק מהדופן הימנית */
+        top: 18px;      /* גובה שתואם ללוגו */
+        padding: 6px 15px;
+        font-size: 13px;
+        z-index: 10;
+    }
 
-            .nav-items {
-                order: 3; /* יורד לשורה חדשה מתחת ללוגו והפרופיל */
-                width: 100%; /* תופס את כל הרוחב כדי לרדת שורה */
-                display: flex;
-                justify-content: center;
-                gap: 15px;
-                margin-top: 15px;
-                border-top: 1px solid #f0f0f0; /* קו מפריד עדין */
-                padding-top: 10px;
-            }
+    /* שורה שנייה: שאר הקישורים */
+    .nav-items {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+        margin-top: 15px;
+        padding-top: 12px;
+        border-top: 1px solid #f0f0f0; /* הקו היפה שאהבת */
+    }
 
-            .nav-items a:not(.profile-btn-nav):not(.profile-btn) {
-                display: inline-block; /* מוודא שרואים את שאר הלינקים */
-                margin: 0 5px;
-            }
-        }
+    /* הסתרת כפתור הפרופיל מתוך רשימת הקישורים (כדי שלא יופיע פעמיים) */
+    .nav-items a.profile-btn-nav, 
+    .nav-items a.profile-btn {
+        display: none !important;
+    }
+
+    .nav-items a {
+        font-size: 14px;
+        font-weight: 700;
+        margin: 0 5px;
+    }
+}
     </style>
 </head>
 <body>
